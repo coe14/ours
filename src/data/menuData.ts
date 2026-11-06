@@ -1,0 +1,73 @@
+import { MenuItem } from '../types';
+
+export const categories: { id: MenuItem['category']; label: string; icon: string }[] = [
+  { id: 'all', label: 'All Items', icon: '🍽️' },
+  { id: 'pizza', label: 'Pizza', icon: '🍕' },
+  { id: 'burgers', label: 'Burgers', icon: '🍔' },
+  { id: 'sandwiches', label: 'Sandwiches', icon: '🥪' },
+  { id: 'desserts', label: 'Desserts', icon: '🍰' },
+  { id: 'coffee', label: 'Coffee', icon: '☕' },
+  { id: 'drinks', label: 'Drinks', icon: '🥤' },
+];
+
+export const menuItems: MenuItem[] = [
+  {
+    id: '1',
+    name: 'Truffle & Mushroom Pizza',
+    description: 'Artisanal sourdough crust topped with wild mushrooms, truffle oil, and fresh mozzarella.',
+    price: 18.99,
+    category: 'pizza',
+    image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800',
+    rating: 4.9,
+    isPopular: true,
+  },
+  {
+    id: '2',
+    name: 'OURS Signature Burger',
+    description: 'Double Angus beef patty, smoked cheddar, caramelized onions, and house relish on a brioche bun.',
+    price: 14.50,
+    category: 'burgers',
+    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800',
+    rating: 4.8,
+    isPopular: true,
+  },
+  {
+    id: '3',
+    name: 'Artisan Avocado & Egg Toast',
+    description: 'Toasted sourdough topped with smashed avocado, poached organic egg, and chili flakes.',
+    price: 11.00,
+    category: 'sandwiches',
+    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?auto=format&fit=crop&q=80&w=800',
+    rating: 4.7,
+  },
+  {
+    id: '4',
+    name: 'Classic Espresso Macchiato',
+    description: 'Rich dark roast espresso stained with a dollop of velvety steamed milk foam.',
+    price: 4.50,
+    category: 'coffee',
+    image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=800',
+    rating: 4.9,
+    isPopular: true,
+  },
+  {
+    id: '5',
+    name: 'Pistachio Velvet Cheesecake',
+    description: 'Creamy New York style cheesecake infused with Sicilian pistachio paste and topped with crushed nuts.',
+    price: 8.99,
+    category: 'desserts',
+    image: 'https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&q=80&w=800',
+    rating: 4.9,
+    isSpecialOffer: true,
+    discountPrice: 6.99,
+  },
+  {
+    id: '6',
+    name: 'Fresh Berry Mint Cooler',
+    description: 'Sparkling craft beverage blended with fresh raspberries, blueberries, mint, and fresh lime juice.',
+    price: 5.50,
+    category: 'drinks',
+    image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&q=80&w=800',
+    rating: 4.6,
+  },
+];
