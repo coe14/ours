@@ -3,28 +3,78 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import MenuSection from "./components/MenuSection";
-import type { MenuItem } from "./types";
+import SpecialOffers from "./components/SpecialOffers";
+import CartDrawer from "./components/CartDrawer";
+import type { MenuItem, CartItem } from "./types";
 
 export default function App() {
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
-  const handleAddToCart = (item: MenuItem) => {
-    setCartCount((prev) => prev + 1);
-    alert(`Added "${item.name}" to your cart!`);
+  // Total item count for Navbar badge
+  const totalCartCount = cartItems.reduce(
+    (acc, item) => acc + item.quantity,
+    0,
+  );
+
+  // Add product to cart logic
+  const handleAddToCart = (product: MenuItem) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      }
+      return [...prev, { product, quantity: 1 }];
+    });
   };
 
-  const handleOpenCart = () => {
-    alert(`Your cart has ${cartCount} item(s).`);
+  // Update item quantity inside cart
+  const handleUpdateQuantity = (id: string, delta: number) => {
+    setCartItems(
+      (prev) =>
+        prev
+          .map((item) => {
+            if (item.product.id === id) {
+              const newQty = item.quantity + delta;
+              return newQty > 0 ? { ...item, quantity: newQty } : null;
+            }
+            return item;
+          })
+          .filter(Boolean) as CartItem[],
+    );
+  };
+
+  // Remove item from cart
+  const handleRemoveItem = (id: string) => {
+    setCartItems((prev) => prev.filter((item) => item.product.id !== id));
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans">
-      <Navbar cartCount={cartCount} onOpenCart={handleOpenCart} />
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-amber-500 selection:text-zinc-950">
+      <Navbar
+        cartCount={totalCartCount}
+        onOpenCart={() => setIsCartOpen(true)}
+      />
+
       <main>
         <Hero />
         <About />
         <MenuSection onAddToCart={handleAddToCart} />
+        <SpecialOffers onAddToCart={handleAddToCart} />
       </main>
+
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+      />
+
       <footer className="py-8 bg-zinc-900 border-t border-zinc-800 text-center text-zinc-500 text-sm">
         <p>© {new Date().getFullYear()} OURS CAFÉ. All rights reserved.</p>
       </footer>
