@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import MenuSection from "./components/MenuSection";
 import SpecialOffers from "./components/SpecialOffers";
+import Contact from "./components/Contact";
 import CartDrawer from "./components/CartDrawer";
 import type { MenuItem, CartItem } from "./types";
 
@@ -11,13 +12,11 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Total item count for Navbar badge
   const totalCartCount = cartItems.reduce(
     (acc, item) => acc + item.quantity,
     0,
   );
 
-  // Add product to cart logic
   const handleAddToCart = (product: MenuItem) => {
     setCartItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
@@ -32,7 +31,6 @@ export default function App() {
     });
   };
 
-  // Update item quantity inside cart
   const handleUpdateQuantity = (id: string, delta: number) => {
     setCartItems(
       (prev) =>
@@ -48,7 +46,6 @@ export default function App() {
     );
   };
 
-  // Remove item from cart
   const handleRemoveItem = (id: string) => {
     setCartItems((prev) => prev.filter((item) => item.product.id !== id));
   };
@@ -60,11 +57,12 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
       />
 
-      <main>
+      <main className="animate-fade-in">
         <Hero />
         <About />
         <MenuSection onAddToCart={handleAddToCart} />
         <SpecialOffers onAddToCart={handleAddToCart} />
+        <Contact />
       </main>
 
       <CartDrawer
@@ -76,7 +74,10 @@ export default function App() {
       />
 
       <footer className="py-8 bg-zinc-900 border-t border-zinc-800 text-center text-zinc-500 text-sm">
-        <p>© {new Date().getFullYear()} OURS CAFÉ. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} OURS CAFÉ. All rights reserved. Crafted
+          with passion.
+        </p>
       </footer>
     </div>
   );
