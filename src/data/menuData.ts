@@ -1,74 +1,90 @@
-import type { MenuItem } from "../types";
+export interface MenuItem {
+  id: string;
+  name: string;
+  description: string;
+  price: number; // In ETB
+  category: string;
+  image: string;
+  rating: number;
+}
+
+export const categories = [
+  { id: "all", name: "All", count: 27 },
+  { id: "lunch", name: "Lunch", count: 12 },
+  { id: "breakfast", name: "Breakfast", count: 8 },
+  { id: "fish", name: "Fish", count: 4 },
+  { id: "chicken", name: "Chicken", count: 5 },
+  { id: "pasta", name: "Pasta", count: 6 },
+  { id: "shiro", name: "Shiro", count: 3 },
+  { id: "hot-drinks", name: "Hot drinks", count: 7 },
+  { id: "cold-drinks", name: "Cold Drinks", count: 9 },
+];
 
 export const menuItems: MenuItem[] = [
   {
     id: "1",
-    name: "Traditional Arabic Coffee (Dallah) & Dates",
+    name: "Mnchet with non spicy sauce",
     description:
-      "Authentic spiced cardamom coffee served with organic fresh dates.",
-    price: 6.5,
-    category: "Coffee",
+      "Minced beef stew cooked with rich Ethiopian aromatic spices served with Injera.",
+    price: 320,
+    category: "lunch",
     image:
-      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&q=80&w=800",
-    rating: 4.9,
-    isSpecialOffer: true,
-    discountPrice: 5.0,
-  },
-  {
-    id: "2",
-    name: "Halal Gourmet Beef Burger",
-    description:
-      "100% Halal juicy beef patty with melted cheese, fresh lettuce, and house sauce on a brioche bun.",
-    price: 14.5,
-    category: "Burgers",
-    image:
-      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1541518763669-27fef04b14e8?auto=format&fit=crop&q=80&w=800",
     rating: 4.8,
   },
   {
-    id: "3",
-    name: "Artisan Honey & Pistachio Pastry",
+    id: "2",
+    name: "Zilzil Tibse",
     description:
-      "Flaky layers filled with crushed pistachios, sweet natural honey, and rose water syrup.",
-    price: 7.99,
-    category: "Desserts",
+      "Strips of tender beef sauteed with onions, green peppers, and traditional spices.",
+    price: 440,
+    category: "lunch",
     image:
-      "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=800",
     rating: 4.9,
-    isSpecialOffer: true,
-    discountPrice: 6.5,
+  },
+  {
+    id: "3",
+    name: "Fasting Combo",
+    description:
+      "Selection of delicious vegan Ethiopian stews including lentils, greens, and yellow peas.",
+    price: 600,
+    category: "lunch",
+    image:
+      "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&q=80&w=800",
+    rating: 5.0,
   },
   {
     id: "4",
-    name: "Refreshing Mint Lemonade",
+    name: "Special Kitfo",
     description:
-      "Freshly squeezed lemons blended with hand-picked mint leaves and crushed ice.",
-    price: 5.5,
-    category: "Drinks",
+      "Finely minced lean beef seasoned with mitmita and warm spiced clarified butter.",
+    price: 580,
+    category: "lunch",
     image:
-      "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=800",
-    rating: 4.7,
+      "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&q=80&w=800",
+    rating: 4.9,
   },
   {
     id: "5",
-    name: "Wood-Fired Margherita Sourdough Pizza",
+    name: "Beef Goulash",
     description:
-      "Artisanal crust topped with fresh mozzarella, ripe tomatoes, and sweet basil leaves.",
-    price: 13.99,
-    category: "Pizza",
+      "Tender beef chunks cooked with fresh tomatoes, potatoes, and mild peppers.",
+    price: 580,
+    category: "lunch",
     image:
-      "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&q=80&w=800",
-    rating: 4.6,
+      "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&q=80&w=800",
+    rating: 4.7,
   },
   {
     id: "6",
-    name: "Spiced Moroccan Mint Tea",
+    name: "Half Meat Dulet",
     description:
-      "Traditional green tea infused with fresh mint leaves and lightly sweetened.",
-    price: 4.5,
-    category: "Drinks",
+      "Traditional spiced mixture of chopped tripe, liver, and lean beef.",
+    price: 220,
+    category: "breakfast",
     image:
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=800",
-    rating: 4.9,
+      "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&q=80&w=800",
+    rating: 4.6,
   },
 ];

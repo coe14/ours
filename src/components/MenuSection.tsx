@@ -1,96 +1,153 @@
 import { useState } from "react";
-import { menuItems, categories } from "../data/menuData";
-import type { Category, MenuItem } from "../types";
-import { Star, Plus, ShoppingBag } from "lucide-react";
+import { menuItems, categories, MenuItem } from "../data/menuData";
+import { Search, ChevronDown, Filter, Star, Plus } from "lucide-react";
 
 interface MenuSectionProps {
   onAddToCart: (item: MenuItem) => void;
 }
 
 export default function MenuSection({ onAddToCart }: MenuSectionProps) {
-  const [selectedCategory, setSelectedCategory] = useState<Category>("all");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredItems =
-    selectedCategory === "all"
-      ? menuItems
-      : menuItems.filter((item) => item.category === selectedCategory);
+  const filteredItems = menuItems.filter((item) => {
+    const matchesCategory =
+      selectedCategory === "all" || item.category === selectedCategory;
+    const matchesSearch = item.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <section id="menu" className="py-24 bg-zinc-950 relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-500 text-xs font-semibold uppercase tracking-wide">
-            <ShoppingBag className="w-3.5 h-3.5" />
-            <span>Our Delicious Offerings</span>
+    <section id="menu" className="py-12 bg-[#FAF7F2]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+        {/* Explore By Category Section (Matches screenshot 782c5c) */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-2">
+            <span className="w-6 h-[2px] bg-orange-600"></span>
+            <span className="text-xs font-bold uppercase tracking-widest text-orange-600">
+              EXPLORE BY
+            </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
-            Explore Our Crafted <span className="text-amber-500">Menu</span>
+          <h2 className="text-3xl font-serif font-bold text-zinc-900">
+            Category
           </h2>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {categories.slice(0, 5).map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`p-4 rounded-2xl border text-left transition-all ${
+                  selectedCategory === cat.id
+                    ? "bg-orange-600 text-white border-orange-600 shadow-lg shadow-orange-500/20"
+                    : "bg-white border-amber-900/5 text-zinc-800 hover:border-orange-300"
+                }`}
+              >
+                <div className="h-20 rounded-xl bg-zinc-100 overflow-hidden mb-3">
+                  <img
+                    src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=300"
+                    alt={cat.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h4 className="font-bold text-xs">{cat.name}</h4>
+                <p
+                  className={`text-[10px] ${selectedCategory === cat.id ? "text-orange-100" : "text-zinc-500"}`}
+                >
+                  {cat.count} dishes
+                </p>
+              </button>
+            ))}
+          </div>
         </div>
 
-        <div className="flex items-center justify-center flex-wrap gap-2 sm:gap-3 mb-12">
-          {categories.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => setSelectedCategory(cat.id)}
-              className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
-                selectedCategory === cat.id
-                  ? "bg-amber-500 text-zinc-950 shadow-lg shadow-amber-500/20 scale-105"
-                  : "bg-zinc-900 text-zinc-300 border border-zinc-800 hover:border-amber-500/50 hover:text-white"
-              }`}
-            >
-              <span>{cat.icon}</span>
-              <span>{cat.label}</span>
+        {/* Top Search & Filter Bar */}
+        <div className="flex flex-col md:flex-row items-center gap-4 pt-4">
+          <div className="relative flex-1 w-full">
+            <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+            <input
+              type="text"
+              placeholder="Search dishes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 rounded-full bg-white border border-amber-900/10 text-xs text-zinc-800 focus:outline-none focus:ring-2 focus:ring-orange-500/20 shadow-sm"
+            />
+          </div>
+
+          <div className="flex items-center gap-3 w-full md:w-auto">
+            <button className="flex-1 md:flex-initial flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white border border-amber-900/10 text-xs font-bold text-zinc-700 shadow-sm hover:bg-zinc-50">
+              <Filter className="w-4 h-4 text-orange-600" />
+              <span>Filters (1)</span>
             </button>
-          ))}
+
+            <div className="relative flex-1 md:flex-initial">
+              <select className="w-full appearance-none px-6 py-3 rounded-full bg-white border border-amber-900/10 text-xs font-bold text-zinc-700 pr-10 shadow-sm focus:outline-none">
+                <option>Most Popular</option>
+                <option>Price: Low to High</option>
+                <option>Price: High to Low</option>
+              </select>
+              <ChevronDown className="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" />
+            </div>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Results Header */}
+        <div className="flex items-center justify-between pt-4">
+          <div className="flex items-center gap-3">
+            <h3 className="font-serif font-bold text-2xl text-zinc-900">
+              Results
+            </h3>
+            <span className="w-8 h-[2px] bg-orange-600"></span>
+            <span className="text-xs text-zinc-500 font-medium">
+              {filteredItems.length} dishes found
+            </span>
+          </div>
+        </div>
+
+        {/* Food Items Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className="group bg-zinc-900/60 rounded-3xl overflow-hidden border border-zinc-800 hover:border-amber-500/50 transition-all duration-500 flex flex-col justify-between shadow-xl"
+              className="bg-white rounded-3xl p-4 border border-amber-900/5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between"
             >
-              <div>
-                <div className="relative h-56 overflow-hidden bg-zinc-900">
+              <div className="space-y-3">
+                <div className="h-48 rounded-2xl overflow-hidden bg-zinc-100">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md border border-zinc-800 text-amber-500 text-xs font-bold uppercase tracking-wider">
-                    {item.category}
-                  </span>
-                  <div className="absolute top-4 right-4 flex items-center gap-1 px-2.5 py-1 rounded-full bg-zinc-950/80 backdrop-blur-md border border-zinc-800 text-white text-xs font-semibold">
-                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
-                    <span>{item.rating}</span>
-                  </div>
                 </div>
 
-                <div className="p-6 space-y-2">
-                  <h3 className="text-xl font-bold text-white group-hover:text-amber-500 transition-colors">
+                <div className="flex items-start justify-between gap-2">
+                  <h4 className="font-serif font-bold text-sm text-zinc-900 leading-snug">
                     {item.name}
-                  </h3>
-                  <p className="text-zinc-400 text-sm line-clamp-2 leading-relaxed">
-                    {item.description}
-                  </p>
+                  </h4>
+                  <span className="text-xs font-bold text-orange-600 whitespace-nowrap">
+                    ETB {item.price}
+                  </span>
                 </div>
+
+                <p className="text-zinc-500 text-[11px] line-clamp-2 leading-relaxed">
+                  {item.description}
+                </p>
               </div>
 
-              <div className="p-6 pt-0 flex items-center justify-between mt-4">
-                <div>
-                  <span className="text-xs text-zinc-500 block">Price</span>
-                  <span className="text-2xl font-extrabold text-white">
-                    ${item.price.toFixed(2)}
-                  </span>
+              <div className="pt-4 flex items-center justify-between border-t border-zinc-100 mt-3">
+                <div className="flex items-center gap-1 text-amber-500 text-xs font-bold">
+                  <Star className="w-3.5 h-3.5 fill-amber-500" />
+                  <span>{item.rating} (0)</span>
                 </div>
 
                 <button
                   onClick={() => onAddToCart(item)}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-500 font-semibold text-sm hover:bg-amber-500 hover:text-zinc-950 transition-all duration-300"
+                  className="px-4 py-2 rounded-full bg-orange-600 text-white text-[11px] font-bold hover:bg-orange-700 transition-all shadow-sm flex items-center gap-1"
                 >
-                  <Plus className="w-4 h-4" />
-                  <span>Add to Cart</span>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add to order</span>
                 </button>
               </div>
             </div>
