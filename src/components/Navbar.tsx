@@ -22,7 +22,6 @@ export default function Navbar({ cartCount, onOpenCart }: NavbarProps) {
     <header className="sticky top-0 z-40 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* 1. Logo */}
           <a href="#home" className="flex items-center gap-2 group">
             <div className="w-10 h-10 rounded-full bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-500 group-hover:bg-amber-500 group-hover:text-zinc-900 transition-colors">
               <Coffee className="w-5 h-5" />
@@ -32,7 +31,6 @@ export default function Navbar({ cartCount, onOpenCart }: NavbarProps) {
             </span>
           </a>
 
-          {/* 2. Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <a
@@ -45,9 +43,7 @@ export default function Navbar({ cartCount, onOpenCart }: NavbarProps) {
             ))}
           </nav>
 
-          {/* 3. Actions (Cart & Mobile Menu Toggle) */}
           <div className="flex items-center gap-4">
-            {/* Cart Icon Button */}
             <button
               onClick={onOpenCart}
               className="relative p-2.5 rounded-full bg-zinc-800 text-zinc-200 hover:text-amber-500 hover:bg-zinc-700 transition-colors"
@@ -61,7 +57,6 @@ export default function Navbar({ cartCount, onOpenCart }: NavbarProps) {
               )}
             </button>
 
-            {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
@@ -77,7 +72,6 @@ export default function Navbar({ cartCount, onOpenCart }: NavbarProps) {
         </div>
       </div>
 
-      {/* 4. Mobile Navigation Dropdown */}
       {isMobileMenuOpen && (
         <div className="md:hidden bg-zinc-900 border-b border-zinc-800 px-4 pt-2 pb-6 space-y-3">
           {navLinks.map((link) => (

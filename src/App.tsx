@@ -10,11 +10,11 @@ export default function App() {
 
   const handleAddToCart = (item: MenuItem) => {
     setCartCount((prev) => prev + 1);
-    alert(`Added "${item.name}" to cart!`);
+    alert(`Added "${item.name}" to your cart!`);
   };
 
   const handleOpenCart = () => {
-    alert("Cart drawer will open here once built!");
+    alert(`Your cart has ${cartCount} item(s).`);
   };
 
   return (
@@ -25,6 +25,9 @@ export default function App() {
         <About />
         <MenuSection onAddToCart={handleAddToCart} />
       </main>
+      <footer className="py-8 bg-zinc-900 border-t border-zinc-800 text-center text-zinc-500 text-sm">
+        <p>© {new Date().getFullYear()} OURS CAFÉ. All rights reserved.</p>
+      </footer>
     </div>
   );
 }
